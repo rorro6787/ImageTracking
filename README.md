@@ -1,5 +1,12 @@
 # ImageTracking
 
+<div align="center">
+  <p>
+    <a href="https://github.com/ultralytics/assets/releases/tag/v8.2.0" target="_blank">
+      <img width="100%" src="https://raw.githubusercontent.com/ultralytics/assets/main/yolov8/banner-yolov8.png" alt="YOLO Vision banner"></a>
+  </p>
+</div>
+
 This repository contains code and resources for training a computer vision model using the YOLO (You Only Look Once) architecture to detect and track handwritten digits in videos. The project also includes functionality to perform arithmetic operations based on the detected digits.
 
 ## Table of Contents
