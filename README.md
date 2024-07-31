@@ -47,14 +47,21 @@ The goal of this project is to create a system that can automatically detect and
     ```sh
     cd repository_name
     ```
-5. (Optional) Create a virtual environment:
-   
-    ```sh
+6. (Optional) Create a virtual environment:
+
+   ```sh
     python -m venv venv
     .\venv\Scripts\activate  # On macOS/Linux use 'python -m venv venv
                                                    source venv/bin/activate'
     ```
-7. Install the required packages:
+
+5. Select venv as your python interpreter (in VSC):
+   
+    ```sh
+    > Python: Select Interpreter
+    .\venv\Scripts\python.exe # On macOS/Linux use './venv/bin/python'
+    ```
+8. Install the required packages:
    
     ```sh
     pip install -r requirements.txt
