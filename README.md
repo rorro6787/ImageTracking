@@ -74,7 +74,7 @@ The dataset should consist of video frames or images with handwritten digits, an
 
 ## Contributors
 - [Emilio Rodrigo Carreira Villalta](https://github.com/rorro6787)
-- [Javier Montes Pérez](javimp2003uma)
+- [Javier Montes Pérez](https://github.com/javimp2003uma)
 
 ## Contributing
 
