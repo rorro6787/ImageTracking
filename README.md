@@ -80,8 +80,8 @@ The goal of this project is to create a system that can automatically detect and
 The dataset should consist of video frames or images with handwritten digits, annotated with bounding boxes. You can use existing datasets like MNIST and augment them to create video sequences.
 
 ## Contributors
-- [Emilio Rodrigo Carreira Villalta](https://github.com/rorro6787)
-- [Javier Montes Pérez](https://github.com/javimp2003uma)
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://github.com/rorro6787) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/emilio-rodrigo-carreira-villalta/) **Emilio Rodrigo Carreira Villalta**
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://github.com/javimp2003uma) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/javier-montes-perez/) **Javier Montes Pérez**
 
 ## Contributing
 
