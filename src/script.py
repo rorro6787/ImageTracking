@@ -85,7 +85,6 @@ def prepare_structure():
     # Remove empty directories
     remove_empty_dirs(base_extract_path)
 
-
     print("Data distribution completed successfully ...")
 
 
