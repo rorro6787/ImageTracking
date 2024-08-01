@@ -93,7 +93,7 @@ def prepare_structure():
     remove_empty_dirs(base_extract_path)
 
     # Create config.yaml file
-    config_content = f"""path: {cd}/MNISTyolov8_split train: train\nval: val\ntest: test\n\nnc: 17\nnames: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'div', 'eqv', 'minus', 'mult', 'plus','para','parc']"""
+    config_content = f"""path: {os.path.join(cd, 'MNISTyolov8_split')}\ntrain: train\nval: val\ntest: test\n\nnc: 17\nnames: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'div', 'eqv', 'minus', 'mult', 'plus','para','parc']"""
 
     with open(os.path.join(base_path, 'config.yaml'), 'w') as file:
         file.write(config_content)
