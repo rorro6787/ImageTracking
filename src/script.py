@@ -24,6 +24,23 @@ def move_files(data, split, images_path, labels_path):
         shutil.move(os.path.join(images_path, img_file), os.path.join(base_path, split, 'images', img_file))
         shutil.move(os.path.join(labels_path, lbl_file), os.path.join(base_path, split, 'labels', lbl_file))
 
+def remove_empty_dirs(path):
+    """
+    Removes empty directories including the base directory if it's empty.
+
+    Args:
+        path (str): Path to the base directory.
+    """
+    for dirpath, dirnames, filenames in os.walk(path, topdown=False):
+        if not dirnames and not filenames:
+            os.rmdir(dirpath)
+
+    # Attempt to remove the base directory
+    try:
+        os.rmdir(path)
+    except OSError as e:
+        print()
+
 def prepare_structure():
     """
     Prepares the directory structure for the MNIST dataset and splits the data into training, validation, and test sets.
@@ -64,6 +81,10 @@ def prepare_structure():
     move_files(train_data,'train',images_path,labels_path)
     move_files(val_data,'val',images_path,labels_path)
     move_files(test_data,'test',images_path,labels_path)
+
+    # Remove empty directories
+    remove_empty_dirs(base_extract_path)
+
 
     print("Data distribution completed successfully ...")
 
