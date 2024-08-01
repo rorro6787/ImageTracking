@@ -6,7 +6,7 @@ import shutil
 import random
 from zipfile import ZipFile
 
-cd = os.getcwd()
+cd = os.getcwd()                    # it's gonna be /src
 base_path = 'MNISTyolov8_split'
 
 def move_files(data, split, images_path, labels_path):
@@ -40,6 +40,13 @@ def remove_empty_dirs(path):
         os.rmdir(path)
     except OSError as e:
         print()
+
+def removeAll():
+    if os.path.exists(f"{cd}/MNISTyolov8_split"):
+        shutil.rmtree(f'{cd}/MNISTyolov8_split', ignore_errors=True)
+        print("Data distribution deleted successfully ...")
+    else:
+        print(f"The directory {cd}/MNISTyolov8_split does not exist.")
 
 def prepare_structure():
     """
@@ -85,7 +92,13 @@ def prepare_structure():
     # Remove empty directories
     remove_empty_dirs(base_extract_path)
 
-    print("Data distribution completed successfully ...")
+    # Create config.yaml file
+    config_content = """train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 16\nnames: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'div', 'eqv', 'minus', 'mult', 'plus','par']"""
+
+    with open(os.path.join(base_path, 'config.yaml'), 'w') as file:
+        file.write(config_content)
+
+    print("Data distribution and yaml creation completed successfully ...")
 
 
 def train_model(yaml_file, epochs, project):
@@ -100,7 +113,7 @@ def train_model(yaml_file, epochs, project):
 
     model = YOLO(model="yolov8x.pt", task="detect")
     model.to('cuda')
-    results = model.train(data = yaml_file,
+    results = model.train(data = f"{base_path}/yaml_file",
         	  epochs = epochs,
               project = project,
         	  batch = 8,
@@ -132,3 +145,5 @@ if len(sys.argv) == 2 and 'c' in sys.argv:
     prepare_structure()
 elif len(sys.argv) == 2 and 't' in sys.argv:
     train_model(f"{cd}/config.yaml",100,"Digits tracking")
+elif len(sys.argv) == 2 and 'r' in sys.argv:
+    removeAll()
