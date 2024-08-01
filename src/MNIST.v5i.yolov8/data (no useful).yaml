@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 15
+names: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'div', 'eqv', 'minus', 'mult', 'plus']
+
+roboflow:
+  workspace: mnist-bvalq
+  project: mnist-icrul
+  version: 5
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/mnist-bvalq/mnist-icrul/dataset/5
