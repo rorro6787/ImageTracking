@@ -71,7 +71,7 @@ def prepare_structure():
     # Gather image and label file names and sort them in ascending order (in this case string order)
     image_files = sorted(os.listdir(images_path))
     label_files = sorted(os.listdir(labels_path))
-    assert len(image_files) == len(label_files) == 7128 # (alredy known number of items in dataset)
+    assert len(image_files) == len(label_files) == 7327 # (alredy known number of items in dataset)
 
     # Shuffle and split data. Data is a list of tuples ...
     data = list(zip(image_files, label_files))
@@ -93,7 +93,7 @@ def prepare_structure():
     remove_empty_dirs(base_extract_path)
 
     # Create config.yaml file
-    config_content = """train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 17\nnames: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'div', 'eqv', 'minus', 'mult', 'plus','para','parc']"""
+    config_content = """path: /home/javimp2003/ImageTracking/src/MNISTyolov8_split train: train\nval: val\ntest: test\n\nnc: 17\nnames: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'div', 'eqv', 'minus', 'mult', 'plus','para','parc']"""
 
     with open(os.path.join(base_path, 'config.yaml'), 'w') as file:
         file.write(config_content)
