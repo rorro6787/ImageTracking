@@ -6,9 +6,11 @@ import shutil
 import random
 from zipfile import ZipFile
 import gdown
+import time
 
 cd = os.getcwd()                    # it's gonna be /src
 base_path = 'dataset_split'
+classes = ['paper', 'rock', 'scissors']
 
 def move_files(data, split, images_path, labels_path):
     """
@@ -172,17 +174,20 @@ def inference_over_image(sourcePath):
     """
 
     file_path = 'best.pt'
-    urlModelDrive = 'https://drive.google.com/uc?id=1h7PrvmW8SaI6wyGE1x2bD-nMirccyfcr' # change URL
-    gdown.download(urlModelDrive,file_path,quiet=False)
+    urlModelDrive = 'https://drive.google.com/uc?id=13v14-RVorjtMCB5vx0qktgPspk2-t_jT'
+    if not os.path.exists(file_path):
+        gdown.download(urlModelDrive,file_path,quiet=False)
+    else:
+        print("best.pt alredy exists ...")
 
     model = YOLO(file_path)
-    results = model(sourcePath)
+    results = model(sourcePath, save = True)
 
     if len(results[0].boxes) != 2:
         print(":( In your image there are not 2 hands!")
     else:
         print(":) You have input a correct image!")
-        print(f"2 hands found with {results[0].boxes[0].conf} and {results[0].boxes[1].conf}")
+        print(f"2 hands found with confidences: {results[0].boxes[0].conf.item()} and {results[0].boxes[1].conf.item()}\n")
         hand1 = results[0].boxes[0].cls
         hand2 = results[0].boxes[1].cls
         determine_winner(hand1,hand2)
@@ -196,8 +201,11 @@ def determine_winner(hand1, hand2):
         hand1 (str): The class of the first hand (e.g., 'Rock', 'Paper', 'Scissors').
         hand2 (str): The class of the second hand (e.g., 'Rock', 'Paper', 'Scissors').
     """
+    hand1 = classes[int(hand1.item())]
+    hand2 = classes[int(hand2.item())]
 
     print(f"Facing {hand1} vs {hand2}\U0001f600")
+    time.sleep(1)
 
     if hand1 == hand2:
         print("It's a draw!")
@@ -242,7 +250,10 @@ def inference_over_video(sourcePath, frame_buffer_size=5):
 
     file_path = 'best.pt'
     urlModelDrive = 'https://drive.google.com/uc?id=1h7PrvmW8SaI6wyGE1x2bD-nMirccyfcr'  # Cambia la URL si es necesario
-    gdown.download(urlModelDrive, file_path, quiet=False)
+    if not os.path.exists(file_path):
+        gdown.download(urlModelDrive,file_path,quiet=False)
+    else:
+        print("best.pt alredy exists ...")
 
     cap = cv2.VideoCapture(sourcePath)
     model = YOLO(file_path)
@@ -273,6 +284,7 @@ def inference_over_video(sourcePath, frame_buffer_size=5):
                             # Determina el ganador basado en el par consistente
                             determine_winner(frame_buffer[0][0], frame_buffer[0][1])
                             frame_buffer = []  # Reinicia el buffer después de determinar el ganador
+                            break
                         else:
                             print("Las detecciones no son consistentes, esperando más frames...")
                 else:
@@ -310,7 +322,7 @@ elif len(sys.argv) == 2 and 'r' in sys.argv:
 elif len(sys.argv) == 3 and 'ii' in sys.argv:
     if sys.argv[-1].startswith("--source="):
         # Remove "--source=" prefix
-        sourcePath = int(sys.argv[-1][9:])
+        sourcePath = sys.argv[-1][9:]
         inference_over_image(sourcePath)
     else:
         # Handle invalid argument format
@@ -318,7 +330,7 @@ elif len(sys.argv) == 3 and 'ii' in sys.argv:
 elif len(sys.argv) == 3 and 'iv' in sys.argv:
     if sys.argv[-1].startswith("--source="):
         # Remove "--source=" prefix
-        sourcePath = int(sys.argv[-1][9:])
+        sourcePath = sys.argv[-1][9:]
         inference_over_video(sourcePath)
     else:
         # Handle invalid argument format
