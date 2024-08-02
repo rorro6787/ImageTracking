@@ -158,7 +158,37 @@ def train_model(yaml_file, epochs, project):
         f.write(" Precision values: {}\n".format(results2.box.prec_values))
         f.write(" Recall: {}\n".format(results2.box.r))
 
+def inference_over_image(sourcePath):
+    file_path = 'best.pt'
+    urlModelDrive = 'https://drive.google.com/uc?id=1h7PrvmW8SaI6wyGE1x2bD-nMirccyfcr' # change URL
+    gdown.download(urlModelDrive,file_path,quiet=False)
 
+    model = YOLO(file_path)
+    results = model(sourcePath)
+
+    if len(results[0].boxes) != 2:
+        print(":( In your image there are not 2 hands!")
+    else:
+        print(":) You have input a correct image!")
+        print(f"2 hands found with {results[0].boxes[0].conf} and {results[0].boxes[1].conf}")
+        hand1 = results[0].boxes[0].cls
+        hand2 = results[0].boxes[1].cls
+        print(f"Facing {hand1} vs {hand2}\U0001f600")
+
+        if hand1 == hand2:
+            print("It's a draw!")
+            print(f"Both hands are {hand1}.")
+        elif (hand1 == "Rock" and hand2 == "Scissors") or \
+             (hand1 == "Scissors" and hand2 == "Paper") or \
+             (hand1 == "Paper" and hand2 == "Rock"):
+            print("Hand 1 wins!")
+            print(f"{hand1} beats {hand2} :)")
+        else:
+            print("Hand 2 wins!")
+            print(f"{hand2} beats {hand1} :)")
+
+        
+    
 if len(sys.argv) == 2 and 'c' in sys.argv:
     prepare_structure()
 elif len(sys.argv) == 3 and 't' in sys.argv:
@@ -168,6 +198,14 @@ elif len(sys.argv) == 3 and 't' in sys.argv:
         train_model(f"{cd}/dataset_split/config.yaml",nEp,"Hands tracking")
     else:
         # Handle invalid argument format
-        print(f"Invalid argument format: {sys.argv[-1]} or {sys.argv[-3]} :( Expected format: --e=nEpochs...")
+        print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --e=nEpochs...")
 elif len(sys.argv) == 2 and 'r' in sys.argv:
     removeAll()
+elif len(sys.argv) == 3 and 'i' in sys.argv:
+    if sys.argv[-1].startswith("--source="):
+        # Remove "--source=" prefix
+        sourcePath = int(sys.argv[-1][9:])
+        inference_over_image(sourcePath)
+    else:
+        # Handle invalid argument format
+        print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --source=sourcePath...")
