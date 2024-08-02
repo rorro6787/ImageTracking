@@ -7,7 +7,7 @@
   </p>
 </div>
 
-This repository contains code and resources for training a computer vision model using the YOLO (You Only Look Once) architecture to detect and track handwritten digits in videos. The project also includes functionality to perform arithmetic operations based on the detected digits.
+This repository contains code and resources for training a computer vision model using the YOLO (You Only Look Once) architecture to detect and track hands of human beings placed in different shapes for the rock paper scissors game. The project also includes functionality to perform arithmetic operations based on the detected hands shapes and the result of the game.
 
 ## Table of Contents
 
@@ -20,15 +20,15 @@ This repository contains code and resources for training a computer vision model
 
 ## Introduction
 
-The goal of this project is to create a system that can automatically detect and track handwritten digits in video frames and calculate operations based on those digits. This can be useful for educational purposes, automated grading systems, and more.
+The goal of this project is to create a system that can automatically detect and track hands of human beings placed in different shapes for the rock paper scissors game and inference the final result of the game when the input image for our model is composed of 2 hands facing each other in a game. This can be useful for educational purposes, automated grading systems, and more.
 
 ## Features
 
-- Detection and tracking of handwritten digits in video using YOLO
+- Detection and tracking of hands using YOLO
 - Preprocessing and augmentation of training data
 - Training scripts for custom YOLO models
 - Evaluation scripts to assess model performance
-- Arithmetic operations on detected digits
+- Inference the result of the game
 - PDF explanation of all the code: [Donwload the PDF document](https://github.com/rorro6787/ImageTracking/blob/main/Image_Tracking_YOLO.pdf)
 
 ## Requirements
@@ -77,7 +77,7 @@ The goal of this project is to create a system that can automatically detect and
 
 ## Dataset
 
-The dataset should consist of video frames or images with handwritten digits, annotated with bounding boxes. You can use existing datasets like MNIST and augment them to create video sequences.
+The dataset should consist of video frames or images containing hands of human persons forming the different forms, annotated with bounding boxes. You can use existing datasets like the ones on Roboflow web or annotate you own dataset by hand.
 
 ## Contributors
 - [![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://github.com/rorro6787) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/emilio-rodrigo-carreira-villalta-2a62aa250/) **Emilio Rodrigo Carreira Villalta**
