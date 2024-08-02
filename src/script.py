@@ -106,7 +106,7 @@ def prepare_structure():
     remove_empty_dirs(base_extract_path)
 
     # Create config.yaml file
-    config_content = f"""path: {os.path.join(cd, 'dataset_split')}\ntrain: train\nval: val\ntest: test\n\nnc: 3\nnames: ['rock', 'paper', 'scissors']"""
+    config_content = f"""path: {os.path.join(cd, 'dataset_split')}\ntrain: train\nval: val\ntest: test\n\nnc: 3\nnames: ['paper', 'rock', 'scissors']"""
 
     with open(os.path.join(base_path, 'config.yaml'), 'w') as file:
         file.write(config_content)
@@ -138,10 +138,10 @@ def train_model(yaml_file, epochs, project):
                         name = "test",
                         split = "test")
     
-    # Crear la ruta completa para el archivo de texto
+    # Create full route for the metrics file
     metrics_file_path2 = os.path.join(project, "testing_metrics.txt")
         
-    # Escribir las métricas en el archivo de texto
+    # Write metrics in that file
     with open(metrics_file_path2, 'w') as f:
         f.write("Another metrics:\n")
         f.write(" Average precision for all classes: {}\n".format(results2.box.all_ap))
