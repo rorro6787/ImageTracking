@@ -7,7 +7,7 @@
   </p>
 </div>
 
-This repository contains code and resources for training a computer vision model using the YOLO (You Only Look Once) architecture to detect and track hands of human beings placed in different shapes for the rock paper scissors game. The project also includes functionality to perform arithmetic operations based on the detected hands shapes and the result of the game.
+This repository contains code and resources for training a computer vision model using the YOLO (You Only Look Once) architecture to detect and track human hands forming different shapes for the rock-paper-scissors game. The project also includes functionality to determine the result of the game based on the detected hand shapes and perform related arithmetic operations.
 
 ## Table of Contents
 
