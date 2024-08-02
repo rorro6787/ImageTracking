@@ -4,3 +4,4 @@ src/Hands tracking/
 src/yolov8n.pt
 src/yolov8x.pt
 src/runs/
+src/dataset.zip

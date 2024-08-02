@@ -5,6 +5,7 @@ from ultralytics import YOLO
 import shutil
 import random
 from zipfile import ZipFile
+import gdown
 
 cd = os.getcwd()                    # it's gonna be /src
 base_path = 'dataset_split'
@@ -47,6 +48,16 @@ def removeAll():
         print("Data distribution deleted successfully ...")
     else:
         print(f"The directory {cd}/dataset_split does not exist.")
+    if os.path.exists(f"{cd}/dataset.zip"):
+        os.remove(f"{cd}/dataset.zip")
+        print("dataset.zip deleted successfully ...")
+    else:
+        print(f"The file {cd}/dataset_zip does not exist.")
+    if os.path.exists(f"{cd}/dataset"):
+        shutil.rmtree(f'{cd}/dataset', ignore_errors=True)
+        print("Data distribution deleted successfully ...")
+    else:
+        print(f"The directory {cd}/dataset does not exist.")
 
 def prepare_structure():
     """
@@ -59,9 +70,11 @@ def prepare_structure():
     # Define paths
     zip_file_path = 'dataset.zip'
     base_extract_path = 'dataset'
+    url = 'https://drive.google.com/uc?id=1h7PrvmW8SaI6wyGE1x2bD-nMirccyfcr'
+    gdown.download(url,zip_file_path,quiet=False)
     
     # Unzip the file
-    with ZipFile(f"dataset/{zip_file_path}", 'r') as zip_ref:
+    with ZipFile(zip_file_path, 'r') as zip_ref:
         zip_ref.extractall(base_extract_path)
 
     # Paths for extracted images and labels
@@ -71,7 +84,7 @@ def prepare_structure():
     # Gather image and label file names and sort them in ascending order (in this case string order)
     image_files = sorted(os.listdir(images_path))
     label_files = sorted(os.listdir(labels_path))
-    assert len(image_files) == len(label_files) == 7327 # (alredy known number of items in dataset)
+    assert len(image_files) == len(label_files) == 6759 # (alredy known number of items in dataset)
 
     # Shuffle and split data. Data is a list of tuples ...
     data = list(zip(image_files, label_files))
