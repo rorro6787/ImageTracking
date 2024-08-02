@@ -111,39 +111,50 @@ def train_model(yaml_file, epochs, project):
         project (str): Path to the project directory where the training results will be saved.
     """
 
-    model = YOLO(model="yolov8x.pt", task="detect")
+    model = YOLO(model="yolov8n.pt", task="detect")
     model.to('cuda')
-    results = model.train(data = yaml_file,
+    model.train(data = yaml_file,
         	  epochs = epochs,
               project = project,
         	  batch = 8,
               name = "train")          # batch = 8 is neccesary because GPU does not support higher
     
+    results2 = model.val(data = yaml_file,
+                        project = project,
+                        batch = 8,
+                        name = "test",
+                        split = "test")
+    
     # Crear la ruta completa para el archivo de texto
-    metrics_file_path = os.path.join(project, "training_metrics.txt")
+    metrics_file_path2 = os.path.join(project, "testing_metrics.txt")
         
     # Escribir las métricas en el archivo de texto
-    with open(metrics_file_path, 'w') as f:
+    with open(metrics_file_path2, 'w') as f:
         f.write("Another metrics:\n")
-        f.write(" Average precision for all classes: {}\n".format(results.box.all_ap))
-        f.write(" Average precision: {}\n".format(results.box.ap))
-        f.write(" Average precision at IoU=0.50: {}\n".format(results.box.ap50))
-        f.write(" F1 score: {}\n".format(results.box.f1))
-        f.write(" Mean average precision: {}\n".format(results.box.map))
-        f.write(" Mean average precision at IoU=0.50: {}\n".format(results.box.map50))
-        f.write(" Mean average precision at IoU=0.75: {}\n".format(results.box.map75))
-        f.write(" Mean average precision for different IoU thresholds: {}\n".format(results.box.maps))
-        f.write(" Mean precision: {}\n".format(results.box.mp))
-        f.write(" Mean recall: {}\n".format(results.box.mr))
-        f.write(" Precision: {}\n".format(results.box.p))
-        f.write(" Precision values: {}\n".format(results.box.prec_values))
-        f.write(" Recall: {}\n".format(results.box.r))
-
+        f.write(" Average precision for all classes: {}\n".format(results2.box.all_ap))
+        f.write(" Average precision: {}\n".format(results2.box.ap))
+        f.write(" Average precision at IoU=0.50: {}\n".format(results2.box.ap50))
+        f.write(" F1 score: {}\n".format(results2.box.f1))
+        f.write(" Mean average precision: {}\n".format(results2.box.map))
+        f.write(" Mean average precision at IoU=0.50: {}\n".format(results2.box.map50))
+        f.write(" Mean average precision at IoU=0.75: {}\n".format(results2.box.map75))
+        f.write(" Mean average precision for different IoU thresholds: {}\n".format(results2.box.maps))
+        f.write(" Mean precision: {}\n".format(results2.box.mp))
+        f.write(" Mean recall: {}\n".format(results2.box.mr))
+        f.write(" Precision: {}\n".format(results2.box.p))
+        f.write(" Precision values: {}\n".format(results2.box.prec_values))
+        f.write(" Recall: {}\n".format(results2.box.r))
 
 
 if len(sys.argv) == 2 and 'c' in sys.argv:
     prepare_structure()
-elif len(sys.argv) == 2 and 't' in sys.argv:
-    train_model(f"{cd}/MNISTyolov8_split/config.yaml",100,"Digits tracking")
+elif len(sys.argv) == 3 and 't' in sys.argv:
+    if sys.argv[-1].startswith("--e="):
+        # Remove "--e=" prefix
+        nEp = int(sys.argv[-1][4:])
+        train_model(f"{cd}/MNISTyolov8_split/config.yaml",nEp,"Digits tracking")
+    else:
+        # Handle invalid argument format
+        print(f"Invalid argument format: {sys.argv[-1]} or {sys.argv[-3]} :( Expected format: --e=nEpochs...")
 elif len(sys.argv) == 2 and 'r' in sys.argv:
     removeAll()
