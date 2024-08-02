@@ -7,6 +7,7 @@ import random
 from zipfile import ZipFile
 import gdown
 import time
+import emoji
 
 cd = os.getcwd()                    # it's gonna be /src
 base_path = 'dataset_split'
@@ -188,9 +189,15 @@ def inference_over_image(sourcePath):
     else:
         print(":) You have input a correct image!")
         print(f"2 hands found with confidences: {results[0].boxes[0].conf.item()} and {results[0].boxes[1].conf.item()}\n")
-        hand1 = results[0].boxes[0].cls
-        hand2 = results[0].boxes[1].cls
+        print(f"{results[0].boxes[0].xyxy.tolist()[0][1]} and {results[0].boxes[1].xyxy.tolist()[0][1]}")
+        if results[0].boxes[0].xyxy.tolist()[0][1] < results[0].boxes[1].xyxy.tolist()[0][1]:
+            hand1 = results[0].boxes[0].cls
+            hand2 = results[0].boxes[1].cls
+        else:
+            hand1 = results[0].boxes[1].cls
+            hand2 = results[0].boxes[0].cls  
         determine_winner(hand1,hand2)
+        results[0].show()
 
 
 def determine_winner(hand1, hand2):
@@ -213,11 +220,13 @@ def determine_winner(hand1, hand2):
     elif (hand1 == "rock" and hand2 == "scissors") or \
             (hand1 == "scissors" and hand2 == "paper") or \
             (hand1 == "paper" and hand2 == "rock"):
-        print("Hand 1 wins!")
-        print(f"{hand1} beats {hand2} :)")
+        print("WE HAVE A WINNER!")
+        print(f"{hand1} beats {hand2} :)".upper())
+        print(emoji.emojize(":fire:"))
     else:
-        print("Hand 2 wins!")
-        print(f"{hand2} beats {hand1} :)")
+        print("WE HAVE A WINNER!")
+        print(f"{hand2} beats {hand1} :)".upper())
+        print(emoji.emojize(":fire:"))
 
 
 def consistency(pairs):
