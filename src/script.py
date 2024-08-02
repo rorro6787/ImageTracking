@@ -7,7 +7,7 @@ import random
 from zipfile import ZipFile
 
 cd = os.getcwd()                    # it's gonna be /src
-base_path = 'MNISTyolov8_split'
+base_path = 'dataset_split'
 
 def move_files(data, split, images_path, labels_path):
     """
@@ -42,8 +42,8 @@ def remove_empty_dirs(path):
         print()
 
 def removeAll():
-    if os.path.exists(f"{cd}/MNISTyolov8_split"):
-        shutil.rmtree(f'{cd}/MNISTyolov8_split', ignore_errors=True)
+    if os.path.exists(f"{cd}/dataset_split"):
+        shutil.rmtree(f'{cd}/dataset_split', ignore_errors=True)
         print("Data distribution deleted successfully ...")
     else:
         print(f"The directory {cd}/MNISTyolov8_split does not exist.")
@@ -57,11 +57,11 @@ def prepare_structure():
     """
 
     # Define paths
-    zip_file_path = 'MNISTyolov8.zip'
+    zip_file_path = 'dataset.zip'
     base_extract_path = 'MNISTyolov8'
     
     # Unzip the file
-    with ZipFile(f"MNIST.v5i.yolov8/{zip_file_path}", 'r') as zip_ref:
+    with ZipFile(f"dataset/{zip_file_path}", 'r') as zip_ref:
         zip_ref.extractall(base_extract_path)
 
     # Paths for extracted images and labels
@@ -93,7 +93,7 @@ def prepare_structure():
     remove_empty_dirs(base_extract_path)
 
     # Create config.yaml file
-    config_content = f"""path: {os.path.join(cd, 'MNISTyolov8_split')}\ntrain: train\nval: val\ntest: test\n\nnc: 17\nnames: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'div', 'eqv', 'minus', 'mult', 'plus','para','parc']"""
+    config_content = f"""path: {os.path.join(cd, 'dataset_split')}\ntrain: train\nval: val\ntest: test\n\nnc: 3\nnames: ['rock', 'paper', 'scissors']"""
 
     with open(os.path.join(base_path, 'config.yaml'), 'w') as file:
         file.write(config_content)
@@ -152,7 +152,7 @@ elif len(sys.argv) == 3 and 't' in sys.argv:
     if sys.argv[-1].startswith("--e="):
         # Remove "--e=" prefix
         nEp = int(sys.argv[-1][4:])
-        train_model(f"{cd}/MNISTyolov8_split/config.yaml",nEp,"Digits tracking")
+        train_model(f"{cd}/dataset_split/config.yaml",nEp,"Hands tracking")
     else:
         # Handle invalid argument format
         print(f"Invalid argument format: {sys.argv[-1]} or {sys.argv[-3]} :( Expected format: --e=nEpochs...")
