@@ -29,7 +29,7 @@ The goal of this project is to create a system that can automatically detect and
 - Training scripts for custom YOLO models
 - Evaluation scripts to assess model performance
 - Inference the result of the game
-- PDF explanation of all the code: [Donwload the PDF document](https://github.com/rorro6787/ImageTracking/blob/main/Image_Tracking_YOLO.pdf)
+- PDF explanation of all the code: [Donwload the PDF document](https://github.com/rorro6787/ImageTracking/blob/gamma/Image_Tracking_YOLO.pdf)
 
 ## Requirements
 
