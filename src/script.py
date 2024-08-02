@@ -46,11 +46,11 @@ def removeAll():
         shutil.rmtree(f'{cd}/dataset_split', ignore_errors=True)
         print("Data distribution deleted successfully ...")
     else:
-        print(f"The directory {cd}/MNISTyolov8_split does not exist.")
+        print(f"The directory {cd}/dataset_split does not exist.")
 
 def prepare_structure():
     """
-    Prepares the directory structure for the MNIST dataset and splits the data into training, validation, and test sets.
+    Prepares the directory structure for the rock_paper_scissors dataset and splits the data into training, validation, and test sets.
 
     Unzips the dataset, shuffles the data, splits it into training (60%), validation (30%), and test (10%) sets, 
     and moves the files into the corresponding directories.
@@ -58,7 +58,7 @@ def prepare_structure():
 
     # Define paths
     zip_file_path = 'dataset.zip'
-    base_extract_path = 'MNISTyolov8'
+    base_extract_path = 'dataset'
     
     # Unzip the file
     with ZipFile(f"dataset/{zip_file_path}", 'r') as zip_ref:

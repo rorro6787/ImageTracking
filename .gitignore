@@ -1,6 +1,6 @@
 venv/
-src/MNISTyolov8_split/
-src/Digits tracking/
+src/dataset_split/
+src/Hands tracking/
 src/yolov8n.pt
 src/yolov8x.pt
 src/runs/
