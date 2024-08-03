@@ -106,7 +106,7 @@ If you want to test with the already trained model, navigate to the test_model f
 
 ## Dataset
 
-The dataset should consist of video frames or images containing hands of human persons forming the different forms, annotated with bounding boxes. You can use existing datasets like the ones on Roboflow web or annotate you own dataset by hand.
+The dataset should consist of video frames or images containing hands of human persons forming the different forms, annotated with bounding boxes. You can use existing datasets like the ones on Roboflow web or annotate you own dataset by hand. If you successfully train the model with your dataset, it can achieve accuracy comparable to ours in tracking rock, paper, scissors.
 
 ## Contributors
 - [![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://github.com/rorro6787) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/emilio-rodrigo-carreira-villalta-2a62aa250/) **Emilio Rodrigo Carreira Villalta**
