@@ -29,6 +29,13 @@ The model yolov8n.pt is one of the variants in the YOLOv8 family, and the name c
 \end{itemize}
 Even though yolov8n is a "nano" model, it is designed to be highly efficient and lightweight. In fact, yolov8n.pt is an excellent choice, especially when computing resources are limited because it is a well-balanced model that provides strong performance for object detection tasks without being overly demanding on computing resources. Its advanced architecture and optimizations make it an excellent choice for projects where efficiency and effectiveness are key, especially when working with constrained computational environments. In the case of training for hand detection in a Rock-Paper-Scissors application, yolov8n.pt offers a pragmatic solution by delivering the necessary accuracy and speed to recognize hand gestures while being well-suited for deployment on devices with limited hardware capabilities.
 
+\begin{figure}[H]
+   \centering
+   \includegraphics[width=0.8\textwidth]{./figures/imagen1}
+   \caption{Rock paper scissors game}
+ \label{fig:red}
+\end{figure}
+
 Moreover, the choice of yolov8n.pt for training a hand detection model in a Rock-Paper-Scissors application underscores a strategic balance between model efficiency and performance. The YOLOv8n variant’s reduced parameter count and optimized architecture are particularly advantageous for real-time applications, where processing speed and responsiveness are crucial. Its lightweight design ensures that the model can be deployed effectively on edge devices with constrained resources, such as mobile phones or embedded systems, without compromising on detection accuracy. By leveraging the PyTorch framework’s capabilities, yolov8n.pt facilitates streamlined development and deployment workflows, enabling rapid iterations and adjustments as needed. This makes it an ideal candidate for practical implementations where maintaining a high level of performance while minimizing computational overhead is essential.
 \section{How to prepare the dataset}
 Regardless of whether you are using YOLO 5, 7, or 8, the format of the dataset remains the same. In other words, if you have already prepared your dataset for training an older YOLO model, you can reuse it to train a newer version. As we already said, we are going to train the YOLO model "yolov8n.pt" because it is lightweight with fewer parameters, allowing the training process to be faster while still maintaining good performance.
@@ -70,10 +77,10 @@ Here's what each value represents:
 \end{itemize}
 
 \subsection{Obtain your dataset with Roboflow}
-Roboflow \hyperlink{target:zona}{\textcolor{blue}{[2]}} is a platform designed to help users build, manage, and deploy computer vision models. It provides tools and services that simplify the process of preparing data, training models, and integrating those models into applications. Once you have an account, you can create a new project and specify the classes you want the model to identify: \newpage
+Roboflow \hyperlink{target:zona}{\textcolor{blue}{[2]}} is a platform designed to help users build, manage, and deploy computer vision models. It provides tools and services that simplify the process of preparing data, training models, and integrating those models into applications. Once you have an account, you can create a new project and specify the classes you want the model to identify: 
 \begin{figure}[H]
    \centering
-   \includegraphics[width=1\textwidth]{./figures/roboflowProject}
+   \includegraphics[width=0.7\textwidth]{./figures/roboflowProject}
    \caption{Create a project in Roboflow}
  \label{fig:red}
 \end{figure}
@@ -85,7 +92,6 @@ Once you have created the project, you can upload or drag and drop all the image
     \label{fig:red}
 \end{figure}
 Once you have done so, the next step is straightforward: to manually label each image and determine the class it belongs to. Here’s an example of how this is done: 
-\newpage
 \begin{figure}[H]
         \centering
         \includegraphics[width=1\textwidth]{./figures/three}
