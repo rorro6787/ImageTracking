@@ -49,22 +49,17 @@ def removeAll():
     Removes the dataset_split directory, dataset.zip file, and dataset directory if they exist.
     Provides feedback if these items are not found.
     """
-
-    if os.path.exists(f"{cd}\dataset_split"):
-        shutil.rmtree(f'{cd}\dataset_split', ignore_errors=True)
+    os.path.join(cd, 'dataset_split')
+    if os.path.exists(os.path.join(cd, 'dataset_split')):
+        shutil.rmtree(os.path.join(cd, 'dataset_split'), ignore_errors=True)
         print("Data distribution deleted successfully ...")
     else:
-        print(f"The directory {cd}\dataset_split does not exist.")
-    if os.path.exists(f"{cd}\dataset.zip"):
-        os.remove(f"{cd}\dataset.zip")
+        print(f"The directory {os.path.join(cd, 'dataset_split')} does not exist.")
+    if os.path.exists(os.path.join(cd, 'dataset.zip')):
+        os.remove(os.path.join(cd, 'dataset.zip'))
         print("dataset.zip deleted successfully ...")
     else:
-        print(f"The file {cd}\dataset_zip does not exist.")
-    if os.path.exists(f"{cd}\dataset"):
-        shutil.rmtree(f'{cd}\dataset', ignore_errors=True)
-        print("Data distribution deleted successfully ...")
-    else:
-        print(f"The directory {cd}\dataset does not exist.")
+        print(f"The file {os.path.join(cd, 'dataset.zip')} does not exist.")
 
 def prepare_structure():
     """

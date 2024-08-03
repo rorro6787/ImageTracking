@@ -20,7 +20,7 @@ def inference_over_image(sourcePath):
         sourcePath (str): Path to the image file to be analyzed.
     """
 
-    results = model(sourcePath, save = True, project=cd)
+    results = model(sourcePath, save = True, project=os.path.join(cd, 'predictions'))
 
     if len(results[0].boxes) != 2:
         print(":( In your image there are not 2 hands!")
@@ -146,4 +146,22 @@ def inference_over_video(sourcePath, frame_buffer_size=5):
 
 #print(os.path.join(cd, 'tests', '1590047761696.jpg'))
 inference_over_image(os.path.join(cd, 'tests', '1590047761696.jpg'))
+
+
+if len(sys.argv) == 3 and 'ii' in sys.argv:
+    if sys.argv[-1].startswith("--source="):
+        # Remove "--source=" prefix
+        sourcePath = sys.argv[-1][9:]
+        inference_over_image(sourcePath)
+    else:
+        # Handle invalid argument format
+        print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --source=sourcePath...")
+elif len(sys.argv) == 3 and 'iv' in sys.argv:
+    if sys.argv[-1].startswith("--source="):
+        # Remove "--source=" prefix
+        sourcePath = sys.argv[-1][9:]
+        inference_over_video(sourcePath)
+    else:
+        # Handle invalid argument format
+        print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --source=sourcePath...")
 
