@@ -74,6 +74,35 @@ The goal of this project is to create a system that can automatically detect and
     ```
 
 ## Usage
+If you want to use the script that prepares the dataset and trains the model, follow these instructions within the train_model folder, where you will find train_script.py:
+
+1. To prepare the dataset, run the script with the following arguments:
+   
+    ```sh
+    python .\train_script.py 'c'
+    ```
+2. To remove the entire dataset structure, run the script with the following arguments:
+
+   ```sh
+    python .\train_script.py 'r'
+    ```
+2. To train the model (after the dataset structure has been created), run the script with the following arguments:
+
+   ```sh
+    python .\train_script.py 't' --e=number_of_epochs
+    ```
+If you want to test with the already trained model, navigate to the test_model folder, where you will find test_script.py and use it as follows:
+
+1. To perform inferences on an image containing rock, paper, or scissors, run the script with the following arguments:
+   ```sh
+    python .\test_script.py 'ii' --source=image_path
+    ```
+2. To perform inferences on a video containing rock, paper, or scissors, run the script with the following arguments:
+   ```sh
+    python .\test_script.py 'iv' --source=video_path
+    ```
+
+
 
 ## Dataset
 
