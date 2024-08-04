@@ -34,6 +34,7 @@ The goal of this project is to create a system that can automatically detect and
 ## Requirements
 
 - Python 3.x
+- Ultralytics YOLOv8+
 
 ## Installation
 
