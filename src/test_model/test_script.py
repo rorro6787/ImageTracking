@@ -102,11 +102,11 @@ def inference_over_video(sourcePath, frame_buffer_size=5):
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    # Intenta usar 'XVID' para .avi o 'mp4v' para .mp4
+    # Try to use 'XVID' for .avi or 'mp4v' for .mp4
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(outputPath, fourcc, fps, (width, height))
 
-    # Verifica si el VideoWriter se ha inicializado correctamente
+    # Veriffy if VideoWriter has beem initialized correctly
     if not out.isOpened():
         print(f"Error: No se pudo abrir el archivo de salida: {outputPath}")
         cap.release()
