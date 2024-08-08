@@ -105,10 +105,10 @@ This script does two things. First, if the image contains exactly two hands, the
 
 Additionally, the script will generate a result image showing how the YOLO model tracked the gesture in the image and identified whether each hand is showing rock, paper, or scissors:
 
-<div style="display: flex; justify-content: space-between;">
-  <img src="https://github.com/rorro6787/rorro6787/blob/main/Images/1590047761696.jpg" alt="Texto alternativo" width="500" style="margin-right: 10px;"/>
-  <img src="https://github.com/rorro6787/rorro6787/blob/main/Images/Images/1590047761696.jpg" alt="Texto alternativo" width="500"/>
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px;">
+  <img src="https://github.com/rorro6787/rorro6787/blob/main/Images/Images/1590047761696.jpg" alt="Texto alternativo" style="flex: 1 1 auto; max-width: 48%; height: auto;"/>
 </div>
+
 
 
 
