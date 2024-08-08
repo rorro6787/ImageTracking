@@ -95,13 +95,33 @@ If you want to use the script that prepares the dataset and trains the model, fo
 If you want to test with the already trained model, navigate to the test_model folder, where you will find test_script.py and use it as follows:
 
 1. To perform inferences on an image containing rock, paper, or scissors, run the script with the following arguments:
+
    ```sh
     python .\test_script.py 'ii' --source=image_path
     ```
-2. To perform inferences on a video containing rock, paper, or scissors, run the script with the following arguments:
+This script does two things. First, if the image contains exactly two hands, the script will display the result of the versus on the console, as shown in the example below:
+
+![Texto alternativo](https://github.com/rorro6787/rorro6787/blob/main/Images/rps.png)
+
+Additionally, the script will generate a result image showing how the YOLO model tracked the gesture in the image and identified whether each hand is showing rock, paper, or scissors:
+
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://github.com/rorro6787/rorro6787/blob/main/Images/1590047761696.jpg" alt="Texto alternativo" width="500" style="margin-right: 10px;"/>
+  <img src="https://github.com/rorro6787/rorro6787/blob/main/Images/Images/1590047761696.jpg" alt="Texto alternativo" width="500"/>
+</div>
+
+
+
+3. To perform inferences on a video containing rock, paper, or scissors, run the script with the following arguments:
+
    ```sh
     python .\test_script.py 'iv' --source=video_path
     ```
+In the repository, there are a few test examples for you to try. You will obtain two video output results: the first will show the video input with YOLO tracking, and the second will display both videos side by side, as shown in the picture below:
+
+[![Vista previa del video](https://github.com/rorro6787/rorro6787/blob/main/Images/video.png)](https://github.com/rorro6787/rorro6787/blob/main/Images/output651ex.mp4)
+
+
 
 
 
