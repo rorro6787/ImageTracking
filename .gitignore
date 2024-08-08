@@ -1,4 +1,5 @@
 venv/
 src/train_model/dataset_split/                              
 src/train_model/dataset.zip
-src/test_model/predictions
+src/test_model/predictions/images
+src/test_model/predictions/videos
