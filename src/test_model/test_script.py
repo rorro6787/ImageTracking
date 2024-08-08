@@ -106,7 +106,7 @@ def inference_over_video(sourcePath, frame_buffer_size=5):
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(outputPath, fourcc, fps, (width, height))
 
-    # Veriffy if VideoWriter has beem initialized correctly
+    # Verify if VideoWriter has beem initialized correctly
     if not out.isOpened():
         print(f"Error: No se pudo abrir el archivo de salida: {outputPath}")
         cap.release()
