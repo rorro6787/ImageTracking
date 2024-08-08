@@ -7,6 +7,7 @@ import random
 from zipfile import ZipFile
 import gdown
 import time
+from moviepy.editor import VideoFileClip, clips_array
 
 cd = os.getcwd()
 classes = ['paper', 'rock', 'scissors']
@@ -77,14 +78,22 @@ def consistency(pairs):
     return True
 
 
-def inference_over_video(sourcePath, outputPath=os.path.join(cd, 'predictions', 'videos', str('output' + str(random.randint(0, 100)))) + '.mp4', frame_buffer_size=5):
+def inference_over_video(sourcePath, frame_buffer_size=5):
+    random_number = random.randint(0, 10000)
+    os.makedirs(os.path.join(cd, 'predictions', 'videos', str(random_number)))
+    outputPath = os.path.join(cd, 'predictions', 'videos', str(random_number), str('output' + str(random_number))) + '.mp4'
+    fuse_vide_path = os.path.join(cd, 'predictions', 'videos', str(random_number), str('output' + str(random_number))) + 'ex.mp4'
+
     file_path = 'best.pt'
+
+    """
     urlModelDrive = 'https://drive.google.com/uc?id=1h7PrvmW8SaI6wyGE1x2bD-nMirccyfcr'
     
     if not os.path.exists(file_path):
         gdown.download(urlModelDrive, file_path, quiet=False)
     else:
         print("best.pt already exists ...")
+    """
 
     cap = cv2.VideoCapture(sourcePath)
     model = YOLO(file_path)
@@ -103,14 +112,14 @@ def inference_over_video(sourcePath, outputPath=os.path.join(cd, 'predictions', 
         cap.release()
         return
 
-    frame_buffer = []
+    # frame_buffer = []
 
     while cap.isOpened():
         success, frame = cap.read()
 
         if success:
             results = model.track(frame, persist=True)
-
+            """
             if results[0].boxes:
                 if len(results[0].boxes) == 2:
                     hand1_cls = results[0].boxes[0].cls
@@ -129,6 +138,7 @@ def inference_over_video(sourcePath, outputPath=os.path.join(cd, 'predictions', 
                             print("Las detecciones no son consistentes, esperando más frames...")
                 else:
                     frame_buffer = []
+            """
 
             annotated_frame = results[0].plot()
 
@@ -143,6 +153,10 @@ def inference_over_video(sourcePath, outputPath=os.path.join(cd, 'predictions', 
     cap.release()
     out.release()
     cv2.destroyAllWindows()
+    video1 = VideoFileClip(sourcePath)
+    video2 = VideoFileClip(outputPath)
+    final_video = clips_array([[video1, video2]])
+    final_video.write_videofile(fuse_vide_path, codec="libx264", fps=24)
 
 def main():
     if len(sys.argv) == 3 and 'ii' in sys.argv:
@@ -163,4 +177,4 @@ def main():
             print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --source=sourcePath...")
 
 if __name__ == "__main__":
-    main()
+    main()    
