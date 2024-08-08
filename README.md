@@ -7,7 +7,7 @@
   </p>
 </div>
 
-This repository contains code and resources for training a computer vision model using the YOLO (You Only Look Once) architecture to detect and track human hands forming different shapes for the rock-paper-scissors game. The project also includes functionality to determine the result of the game based on the detected hand shapes and perform related arithmetic operations.
+This repository contains code and resources for training a computer vision model using the YOLO (You Only Look Once) architecture to detect and track human hands forming different shapes for the rock-paper-scissors game. The project also includes functionality to determine the result of the game based on the detected hand shapes and perform logis associated.
 
 ## Table of Contents
 
@@ -29,7 +29,7 @@ The goal of this project is to create a system that can automatically detect and
 - Training scripts for custom YOLO models
 - Evaluation scripts to assess model performance
 - Inference the result of the game
-- PDF explanation of all the code: [Donwload the PDF document](https://github.com/rorro6787/ImageTracking/blob/main/Image_Tracking_YOLO.pdf)
+- PDF explanation of all the code: [Donwload the PDF document](https://github.com/rorro6787/ImageTracking/blob/gamma/Image_Tracking_YOLO.pdf)
 
 ## Requirements
 
@@ -75,10 +75,59 @@ The goal of this project is to create a system that can automatically detect and
     ```
 
 ## Usage
+If you want to use the script that prepares the dataset and trains the model, follow these instructions within the train_model folder, where you will find train_script.py:
+
+1. To prepare the dataset, run the script with the following arguments:
+   
+    ```sh
+    python .\train_script.py 'c'
+    ```
+2. To remove the entire dataset structure, run the script with the following arguments:
+
+   ```sh
+    python .\train_script.py 'r'
+    ```
+2. To train the model (after the dataset structure has been created), run the script with the following arguments:
+
+   ```sh
+    python .\train_script.py 't' --e=number_of_epochs
+    ```
+If you want to test with the already trained model, navigate to the test_model folder, where you will find test_script.py and use it as follows:
+
+1. To perform inferences on an image containing rock, paper, or scissors, run the script with the following arguments:
+
+   ```sh
+    python .\test_script.py 'ii' --source=image_path
+    ```
+This script does two things. First, if the image contains exactly two hands, the script will display the result of the versus on the console, as shown in the example below:
+
+![Texto alternativo](https://github.com/rorro6787/rorro6787/blob/main/Images/rps.png)
+
+Additionally, the script will generate a result image showing how the YOLO model tracked the gesture in the image and identified whether each hand is showing rock, paper, or scissors:
+
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px;">
+  <img src="https://github.com/rorro6787/rorro6787/blob/main/Images/Images/1590047761696.jpg" alt="Texto alternativo" style="flex: 1 1 auto; max-width: 48%; height: auto;"/>
+</div>
+
+
+
+
+3. To perform inferences on a video containing rock, paper, or scissors, run the script with the following arguments:
+
+   ```sh
+    python .\test_script.py 'iv' --source=video_path
+    ```
+In the repository, there are a few test examples for you to try. You will obtain two video output results: the first will show the video input with YOLO tracking, and the second will display both videos side by side, as shown in the picture below:
+
+[![Vista previa del video](https://github.com/rorro6787/rorro6787/blob/main/Images/video.png)](https://github.com/rorro6787/rorro6787/blob/main/Images/output651ex.mp4)
+
+
+
+
 
 ## Dataset
 
-The dataset should consist of video frames or images containing hands of human persons forming the different forms, annotated with bounding boxes. You can use existing datasets like the ones on Roboflow web or annotate you own dataset by hand.
+The dataset should consist of video frames or images containing hands of human persons forming the different forms, annotated with bounding boxes. You can use existing datasets like the ones on Roboflow web or annotate you own dataset by hand. If you successfully train the model with your dataset, it can achieve accuracy comparable to ours in tracking rock, paper, scissors.
 
 ## Contributors
 - [![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://github.com/rorro6787) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/emilio-rodrigo-carreira-villalta-2a62aa250/) **Emilio Rodrigo Carreira Villalta**
