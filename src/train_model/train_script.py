@@ -160,18 +160,22 @@ def train_model(yaml_file, epochs, project):
         f.write(" Precision values: {}\n".format(results2.box.prec_values))
         f.write(" Recall: {}\n".format(results2.box.r))
 
-if len(sys.argv) == 2 and 'c' in sys.argv:
-    prepare_structure()
-elif len(sys.argv) == 3 and 't' in sys.argv:
-    if sys.argv[-1].startswith("--e="):
-        # Remove "--e=" prefix
-        nEp = int(sys.argv[-1][4:])
-        train_model(f"{cd}/dataset_split/config.yaml",nEp,"Hands tracking")
+def main():
+    if len(sys.argv) == 2 and 'c' in sys.argv:
+        prepare_structure()
+    elif len(sys.argv) == 3 and 't' in sys.argv:
+        if sys.argv[-1].startswith("--e="):
+            # Remove "--e=" prefix
+            nEp = int(sys.argv[-1][4:])
+            train_model(f"{cd}/dataset_split/config.yaml",nEp,"Hands tracking")
+        else:
+            # Handle invalid argument format
+            print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --e=nEpochs...")
+    elif len(sys.argv) == 2 and 'r' in sys.argv:
+        removeAll()
     else:
         # Handle invalid argument format
-        print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --e=nEpochs...")
-elif len(sys.argv) == 2 and 'r' in sys.argv:
-    removeAll()
-else:
-    # Handle invalid argument format
-    print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --source=sourcePath...")
+        print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --source=sourcePath...")
+
+if __name__ == "__main__":
+    main()

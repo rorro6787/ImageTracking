@@ -20,7 +20,7 @@ def inference_over_image(sourcePath):
         sourcePath (str): Path to the image file to be analyzed.
     """
 
-    results = model(sourcePath, save = True, project=os.path.join(cd, 'predictions'))
+    results = model(sourcePath, save = True, project=os.path.join(cd, 'predictions', 'images'))
 
     if len(results[0].boxes) != 2:
         print(":( In your image there are not 2 hands!")
@@ -77,37 +77,41 @@ def consistency(pairs):
     return True
 
 
-def inference_over_video(sourcePath, frame_buffer_size=5):
-    """
-    Performs inference on a video file, analyzing pairs of detected hands across frames and determining the winner if pairs are consistent.
-
-    Args:
-        sourcePath (str): Path to the video file to be analyzed.
-        frame_buffer_size (int): Number of frames to buffer for consistency checking. Default is 5.
-    """
-
+def inference_over_video(sourcePath, outputPath=os.path.join(cd, 'predictions', 'videos', str('output' + str(random.randint(0, 100)))) + '.mp4', frame_buffer_size=5):
     file_path = 'best.pt'
-    urlModelDrive = 'https://drive.google.com/uc?id=1h7PrvmW8SaI6wyGE1x2bD-nMirccyfcr'  # Cambia la URL si es necesario
+    urlModelDrive = 'https://drive.google.com/uc?id=1h7PrvmW8SaI6wyGE1x2bD-nMirccyfcr'
+    
     if not os.path.exists(file_path):
-        gdown.download(urlModelDrive,file_path,quiet=False)
+        gdown.download(urlModelDrive, file_path, quiet=False)
     else:
-        print("best.pt alredy exists ...")
+        print("best.pt already exists ...")
 
     cap = cv2.VideoCapture(sourcePath)
     model = YOLO(file_path)
 
-    # Buffer para almacenar pares de clases detectadas
+    fps = int(cap.get(cv2.CAP_PROP_FPS))
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+    # Intenta usar 'XVID' para .avi o 'mp4v' para .mp4
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(outputPath, fourcc, fps, (width, height))
+
+    # Verifica si el VideoWriter se ha inicializado correctamente
+    if not out.isOpened():
+        print(f"Error: No se pudo abrir el archivo de salida: {outputPath}")
+        cap.release()
+        return
+
     frame_buffer = []
 
     while cap.isOpened():
         success, frame = cap.read()
 
         if success:
-            # Ejecuta el seguimiento con YOLOv8 en el frame, persistiendo las pistas entre frames
             results = model.track(frame, persist=True)
 
             if results[0].boxes:
-                # Asegúrate de que haya exactamente 2 manos detectadas
                 if len(results[0].boxes) == 2:
                     hand1_cls = results[0].boxes[0].cls
                     hand2_cls = results[0].boxes[1].cls
@@ -116,52 +120,47 @@ def inference_over_video(sourcePath, frame_buffer_size=5):
                     if len(frame_buffer) > frame_buffer_size:
                         frame_buffer.pop(0)
 
-                    # Verifica la consistencia después de llenar el buffer
                     if len(frame_buffer) == frame_buffer_size:
                         if consistency(frame_buffer):
-                            # Determina el ganador basado en el par consistente
                             determine_winner(frame_buffer[0][0], frame_buffer[0][1])
-                            frame_buffer = []  # Reinicia el buffer después de determinar el ganador
+                            frame_buffer = []
                             break
                         else:
                             print("Las detecciones no son consistentes, esperando más frames...")
                 else:
-                    # Si no hay exactamente 2 manos detectadas, reinicia el buffer
                     frame_buffer = []
 
-            # Visualiza los resultados en el frame
             annotated_frame = results[0].plot()
+
+            out.write(annotated_frame)
             cv2.imshow("YOLOv8 Tracking", annotated_frame)
 
-            # Rompe el bucle si se presiona 'q'
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
         else:
-            # Rompe el bucle si se llega al final del video
             break
 
-    # Libera el objeto de captura de video y cierra la ventana de visualización
     cap.release()
+    out.release()
     cv2.destroyAllWindows()
 
-#print(os.path.join(cd, 'tests', '1590047761696.jpg'))
-inference_over_image(os.path.join(cd, 'tests', '1590047761696.jpg'))
+def main():
+    if len(sys.argv) == 3 and 'ii' in sys.argv:
+        if sys.argv[-1].startswith("--source="):
+            # Remove "--source=" prefix
+            sourcePath = sys.argv[-1][9:]
+            inference_over_image(sourcePath)
+        else:
+            # Handle invalid argument format
+            print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --source=sourcePath...")
+    elif len(sys.argv) == 3 and 'iv' in sys.argv:
+        if sys.argv[-1].startswith("--source="):
+            # Remove "--source=" prefix
+            sourcePath = sys.argv[-1][9:]
+            inference_over_video(sourcePath)
+        else:
+            # Handle invalid argument format
+            print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --source=sourcePath...")
 
-
-if len(sys.argv) == 3 and 'ii' in sys.argv:
-    if sys.argv[-1].startswith("--source="):
-        # Remove "--source=" prefix
-        sourcePath = sys.argv[-1][9:]
-        inference_over_image(sourcePath)
-    else:
-        # Handle invalid argument format
-        print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --source=sourcePath...")
-elif len(sys.argv) == 3 and 'iv' in sys.argv:
-    if sys.argv[-1].startswith("--source="):
-        # Remove "--source=" prefix
-        sourcePath = sys.argv[-1][9:]
-        inference_over_video(sourcePath)
-    else:
-        # Handle invalid argument format
-        print(f"Invalid argument format: {sys.argv[-1]}  :( Expected format: --source=sourcePath...")
-
+if __name__ == "__main__":
+    main()
